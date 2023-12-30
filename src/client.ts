@@ -41,7 +41,6 @@ interface globalStorageOptions {
 export function init(opts: globalStorageOptions = {}) {
     _hubUrl = (!opts.url) ? _hubUrl : opts.url;
     _allow_regex = (!opts.allow) ? _getDomain(_hostname) + "$" : opts.allow;
-    console.log(_getDomain(_hostname));
     // We want the current origin to also match the opts.allow.
     if (_getDomain(_hostname).match(_allow_regex) == null) {
         
@@ -95,7 +94,6 @@ function _listener(message: any) {
     if (_requests[message.data.id]) {
         _requests[message.data.id](message.data.value, message.data.error);
     }
-
 }
 
 function _request(method: string, params: any) {
@@ -169,7 +167,6 @@ export function getItem(key: string) {
 }
 
 export function setItem(key: string, value: any) {
-
     return _request('global-storage:set', {key: key, value: value});
 }
 

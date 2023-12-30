@@ -1,4 +1,7 @@
-# unLocalStorage
+# globalStorage
+
+While localStorage is local only to the domain you are on, globalStorage allows you to store and retrieve data across
+multiple domains. Be mindful of local legislation and ensure you use this ethically.
 
 ## Installation
 

@@ -6,7 +6,6 @@ interface hubOptionsInterface {
     allow?: string,
     allow_empty_origin?: boolean
 }
-
 /* init() takes opts as an argument
  * At the moment, opts can have two parameters: allow and allow_empty_origin
  * allow is a regex of the origins that are allowed to use the hub.
@@ -57,7 +56,6 @@ function _listener(message: MessageEvent ) {
     } catch(e) {
         error = e.message;
     }
-
     window.parent.postMessage({
         id: message.data.id,
         value: result,
@@ -102,16 +100,17 @@ function _setItem(message: MessageEvent) {
         storeValue
         );    
 
-    return true;
+    return storeValue;
 }
 
 function _getItem(message: MessageEvent) {
+    
     const storeItem = window.localStorage.getItem(message.data.key);
 
     var storeValue = null;
 
     if (storeItem == null) {
-        throw new Error("Key not found");
+        return null;
     } else {
         try {
             storeValue = JSON.parse(atob(storeItem)).value;
@@ -154,8 +153,9 @@ function _getDomain(url: string) {
     const _url = new URL(url);
     const _hostname = _url.hostname;
     if (_hostname == 'localhost') return "localhost";
-
-    try {  
-      return _hostname.match(/[^.]*(\.[^.]{2,4}(?:\.[^.]{2,3})?$|\.[^.]{2,8}$)/)[0];
-    } catch(e) {}
+    try {
+        return _hostname.match(/[^.]*(\.[^.]{2,4}(?:\.[^.]{2,3})?$|\.[^.]{2,8}$)/)[0];
+    } catch(e) {
+        throw new Error("getDomain");
+    }
 }
